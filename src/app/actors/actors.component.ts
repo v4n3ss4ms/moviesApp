@@ -4,10 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Actor } from 'src/domain';
 import { ActorLocalRepository } from 'src/repositories';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-actors',
   standalone: true,
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './actors.component.html',
   styleUrls: ['./actors.component.scss'],
 })
@@ -21,8 +23,7 @@ export class ActorsComponent {
   ) {}
 
   async ngOnInit() {
-    const actors = await this.actorRepository.getAll('1');
-    this.actors = actors;
+    this.actors = await this.actorRepository.getAll('1');
   }
 
   async onSearchChange(e: Event) {

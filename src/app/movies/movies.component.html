@@ -38,17 +38,20 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let m of movies">
-      <td>{{ m.id }}</td>
-      <td>{{ m.title }}</td>
-      <td>{{ m.year }}</td>
-      <td>{{ m.actors }}</td>
-      <td>{{ m.rate ? m.rate + "/ 10" : "-" }}</td>
+  @for(movie of movies; track movie.id) {
+    <tr>
+      <td>{{ movie.id }}</td>
+      <td>{{ movie.title }}</td>
+      <td>{{ movie.year }}</td>
+      <td>{{ movie.actors }}</td>
+      <td>{{ movie.rate ? movie.rate + "/ 10" : "-" }}</td>
       <td>
-        <a class="table-link" (click)="preview(m.id)">Preview</a> |
-        <a class="table-link" (click)="rate(m.id)">Rate</a> |
-        <a class="table-link" (click)="delete(m.id)">Delete</a>
+        <a class="table-link" (click)="preview(movie.id)">Preview</a> |
+        <a class="table-link" (click)="rate(movie.id)">Rate</a> |
+        <a class="table-link" (click)="delete(movie.id)">Delete</a>
       </td>
     </tr>
+  }
+
   </tbody>
 </table>

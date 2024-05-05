@@ -8,6 +8,7 @@
     <label for="search">Search: </label>
     <input
       type="text"
+      id="search"
       name="search"
       placeholder="Search"
       (keyup)="onSearchChange($event)"
@@ -23,9 +24,11 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let a of actors">
-      <td>{{ a.id }}</td>
-      <td>{{ a.name }}</td>
+  @for(actor of actors; track actor.id) {
+    <tr>
+      <td>{{ actor.id }}</td>
+      <td>{{ actor.name }}</td>
     </tr>
+  }
   </tbody>
 </table>
