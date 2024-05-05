@@ -1,0 +1,13 @@
+<div class="modal-content" style="padding: 20px">
+  <h2>Rate movie {{ data.movie.title }}</h2>
+  <form [formGroup]="formGroup">
+    <input
+      type="number"
+      max="10"
+      min="0"
+      formControlName="rate"
+      [class.error]="submitted && formGroup.get('rate')?.errors"
+    />
+    <button (click)="rate()" class="submit">Rate!</button>
+  </form>
+</div>
