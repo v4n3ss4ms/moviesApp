@@ -16,13 +16,13 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-movie-dialog',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
+  templateUrl: './movie-dialog.component.html',
+  styleUrls: ['./movie-dialog.component.scss'],
 })
-export class DialogComponent {
+export class MovieDialogComponent {
   public actors: Actor[] = [];
   public submitted = false;
   public formGroup = new FormGroup({
@@ -35,7 +35,7 @@ export class DialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private moviesService: MovieLocalRepository,
     private actorsService: ActorLocalRepository,
-    private dialogRef: MatDialogRef<DialogComponent>
+    private dialogRef: MatDialogRef<MovieDialogComponent>
   ) {
     this.formGroup.patchValue({ ...this.data.movie });
   }

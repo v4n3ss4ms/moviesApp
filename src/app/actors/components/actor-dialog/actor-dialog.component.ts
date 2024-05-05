@@ -16,13 +16,13 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-dialog',
+  selector: 'app-actor-dialog',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule],
-  templateUrl: './dialog.component.html',
-  styleUrls: ['./dialog.component.scss'],
+  templateUrl: './actor-dialog.component.html',
+  styleUrls: ['./actor-dialog.component.scss'],
 })
-export class DialogComponent {
+export class ActorDialogComponent {
   public submitted = false;
   public formGroup = new FormGroup({
     name: new FormControl(null, [Validators.required]),
@@ -31,7 +31,7 @@ export class DialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private actorRepository: ActorLocalRepository,
-    private dialogRef: MatDialogRef<DialogComponent>
+    private dialogRef: MatDialogRef<ActorDialogComponent>
   ) {}
 
   async add() {

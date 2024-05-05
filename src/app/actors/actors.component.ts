@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { Actor } from 'src/domain';
 import { ActorLocalRepository } from 'src/repositories';
-import { DialogComponent } from './components/dialog/dialog.component';
+import { ActorDialogComponent } from './components';
 import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
@@ -35,7 +35,7 @@ export class ActorsComponent {
 
   addNew() {
     this.dialog
-      .open(DialogComponent, {
+      .open(ActorDialogComponent, {
         minWidth: '300px',
       })
       .afterClosed()

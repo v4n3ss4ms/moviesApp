@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from './components/dialog/dialog.component';
-import { RateDialogComponent } from './components/rate-dialog/rate-dialog.component';
+import { MovieDialogComponent } from './components';
+import { RateDialogComponent } from './components';
 import { MovieLocalRepository } from 'src/repositories';
 import { Movie } from 'src/domain';
 import { RouterLink, RouterLinkActive } from "@angular/router";
@@ -29,7 +29,7 @@ export class MoviesComponent {
   preview(id: number) {
     const selectedMovie = this.movies.find((m) => m.id === id);
     this.dialog
-      .open(DialogComponent, {
+      .open(MovieDialogComponent, {
         minWidth: '300px',
         data: { movie: selectedMovie },
       })
