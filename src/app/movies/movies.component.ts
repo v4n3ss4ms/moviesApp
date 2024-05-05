@@ -4,12 +4,10 @@ import { MovieDialogComponent } from './components';
 import { RateDialogComponent } from './components';
 import { MovieLocalRepository } from 'src/repositories';
 import { Movie } from 'src/domain';
-import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-movies',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
 })

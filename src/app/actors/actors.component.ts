@@ -4,12 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Actor } from 'src/domain';
 import { ActorLocalRepository } from 'src/repositories';
 import { ActorDialogComponent } from './components';
-import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
   selector: 'app-actors',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
   templateUrl: './actors.component.html',
   styleUrls: ['./actors.component.scss'],
 })
