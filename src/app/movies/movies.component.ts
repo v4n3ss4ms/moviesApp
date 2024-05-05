@@ -59,7 +59,7 @@ export class MoviesComponent {
     this.preview(0);
   }
 
-  async onSearchChange(e: Event) {
+  async onTitleChange(e: Event) {
     this.filter.title = (e.target as HTMLInputElement).value;
     this.movies = await this.moviesService.getAll('1', this.filter);
   }

@@ -18,7 +18,7 @@ export interface RateDialogData {
 @Component({
   selector: 'app-rate-dialog',
   standalone: true,
-    imports: [ReactiveFormsModule, FormsModule, DialogComponent],
+  imports: [ReactiveFormsModule, FormsModule, DialogComponent],
   templateUrl: './rate-dialog.component.html',
   styleUrls: ['./rate-dialog.component.scss'],
 })
