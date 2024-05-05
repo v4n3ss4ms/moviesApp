@@ -42,4 +42,4 @@ testem.log
 Thumbs.db
 
 # DB
-db.json
+/db.json
