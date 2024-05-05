@@ -10,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActorLocalRepository } from 'src/repositories';
 import { MovieLocalRepository } from 'src/repositories';
 import { Actor, Movie } from 'src/domain';
+import { DialogComponent } from '../../../components';
 
 export interface DialogData {
   movie: Movie;
@@ -18,7 +19,7 @@ export interface DialogData {
 @Component({
   selector: 'app-movie-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, DialogComponent],
   templateUrl: './movie-dialog.component.html',
   styleUrls: ['./movie-dialog.component.scss'],
 })

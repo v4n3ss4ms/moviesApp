@@ -1,12 +1,11 @@
-<div class="modal-content" style="padding: 20px">
-  @if(data.movie?.id){
-    <h2>Edit movie with id = {{ data.movie.id }}</h2>
-  }
-  @else {
-    <h2>Add new movie</h2>
-  }
-
-
+<app-dialog>
+  <h2 title>
+    @if (data.movie?.id) {
+      Edit movie with id = {{ data.movie.id }}
+    } @else {
+      Add new movie
+    }
+  </h2>
   <form [formGroup]="formGroup">
     <input
       placeholder="title"
@@ -29,4 +28,4 @@
     <button (click)="submit()" class="submit">Save!</button>
     <button (click)="delete()" class="submit">Delete!</button>
   </form>
-</div>
+</app-dialog>

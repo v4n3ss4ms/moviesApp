@@ -10,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Actor } from 'src/domain';
 
 import { ActorLocalRepository } from 'src/repositories';
+import { DialogComponent } from '../../../components';
 
 export interface DialogData {
   actor: Actor;
@@ -18,7 +19,7 @@ export interface DialogData {
 @Component({
   selector: 'app-actor-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [ReactiveFormsModule, FormsModule, DialogComponent],
   templateUrl: './actor-dialog.component.html',
   styleUrls: ['./actor-dialog.component.scss'],
 })

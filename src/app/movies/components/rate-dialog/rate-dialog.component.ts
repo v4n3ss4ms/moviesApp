@@ -9,6 +9,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MovieLocalRepository } from 'src/repositories';
 import { Movie } from 'src/domain';
+import { DialogComponent } from '../../../components';
 
 export interface RateDialogData {
   movie: Movie;
@@ -17,7 +18,7 @@ export interface RateDialogData {
 @Component({
   selector: 'app-rate-dialog',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule],
+    imports: [ReactiveFormsModule, FormsModule, DialogComponent],
   templateUrl: './rate-dialog.component.html',
   styleUrls: ['./rate-dialog.component.scss'],
 })

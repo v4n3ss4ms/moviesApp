@@ -1,5 +1,5 @@
-<div class="modal-content" style="padding: 20px">
-  <h2>Add new actor</h2>
+<app-dialog>
+  <h2 title>Add new actor</h2>
   <form [formGroup]="formGroup">
     <input
       type="text"
@@ -8,4 +8,4 @@
     />
     <button (click)="add()" class="submit">Add!</button>
   </form>
-</div>
+</app-dialog>
