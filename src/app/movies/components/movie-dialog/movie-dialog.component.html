@@ -1,6 +1,6 @@
 <app-dialog>
   <h2 title>
-    @if (data.movie.id) {
+    @if (data.movie && data.movie.id) {
       Edit movie with id = {{ data.movie.id }}
     } @else {
       Add new movie
