@@ -19,7 +19,7 @@ export class MovieLocalRepository implements MovieRepository {
     const params = new HttpParams().set('page', page);
     let url = MOVIES_API_URL;
     Object.entries(filter)
-      .filter(([key, value]) => !!value)
+      .filter(([_, value]) => !!value)
       .forEach(([key, value], index) => {
         const prefix = index === 0 ? '?' : '&';
         switch (key) {
