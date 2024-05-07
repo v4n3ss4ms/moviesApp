@@ -6,7 +6,7 @@ import { Movie } from '../../domain';
 export class EditMovieCmd {
   constructor(private movieRepository: MovieLocalRepository) {}
 
-  async execute(id: number, movie: Partial<Movie>): Promise<Movie> {
+  async execute(id: string, movie: Partial<Movie>): Promise<Movie> {
     return await this.movieRepository.edit(id, movie)
   }
 }

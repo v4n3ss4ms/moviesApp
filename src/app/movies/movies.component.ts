@@ -25,7 +25,7 @@ export class MoviesComponent {
     this.movies  = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
-  preview(id: number) {
+  preview(id: string) {
     const selectedMovie = this.movies.find((m) => m.id === id);
     this.dialog
       .open(MovieDialogComponent, {
@@ -38,7 +38,7 @@ export class MoviesComponent {
       });
   }
 
-  rate(id: number) {
+  rate(id: string) {
     const selectedMovie = this.movies.find((m) => m.id === id);
     this.dialog
       .open(RateDialogComponent, {
@@ -51,13 +51,13 @@ export class MoviesComponent {
       });
   }
 
-  async delete(id: number) {
+  async delete(id: string) {
     await this.deleteMovieCmd.execute(id);
     this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
   add() {
-    this.preview(0);
+    this.preview('0');
   }
 
   async onTitleChange(e: Event) {

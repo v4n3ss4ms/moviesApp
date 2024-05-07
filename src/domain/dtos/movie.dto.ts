@@ -3,5 +3,5 @@ export interface Movie {
   year: number;
   rate: number | null;
   actors: string[];
-  id: number;
+  id: string;
 }
