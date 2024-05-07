@@ -11,7 +11,7 @@ import { ActorLocalRepository } from 'src/repositories';
 import { MovieLocalRepository } from 'src/repositories';
 import { Actor, Movie } from 'src/domain';
 import { DialogComponent } from '../../../components';
-import { CreateMovieCmd } from '../../../../application';
+import { CreateMovieCmd, EditMovieCmd } from '../../../../application';
 
 export interface DialogData {
   movie: Movie;
@@ -37,6 +37,7 @@ export class MovieDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private moviesService: MovieLocalRepository,
     private createMovieCmd: CreateMovieCmd,
+    private editMovieCmd: EditMovieCmd,
     private actorsService: ActorLocalRepository,
     private dialogRef: MatDialogRef<MovieDialogComponent>
   ) {
@@ -52,7 +53,7 @@ export class MovieDialogComponent {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       if (this.data.movie?.id) {
-        await this.moviesService.edit(
+        await this.editMovieCmd.execute(
           this.data.movie.id,
           this.formGroup.value as any
         );

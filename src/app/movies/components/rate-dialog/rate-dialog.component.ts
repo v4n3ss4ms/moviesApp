@@ -7,9 +7,9 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MovieLocalRepository } from 'src/repositories';
 import { Movie } from 'src/domain';
 import { DialogComponent } from '../../../components';
+import { EditMovieCmd } from '../../../../application';
 
 export interface RateDialogData {
   movie: Movie;
@@ -34,7 +34,7 @@ export class RateDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: RateDialogData,
-    private moviesService: MovieLocalRepository,
+    private editMovieCmd: EditMovieCmd,
     private dialogRef: MatDialogRef<RateDialogComponent>
   ) {
     this.formGroup.patchValue({ rate: this.data.movie.rate });
@@ -44,7 +44,7 @@ export class RateDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      await this.moviesService.edit(
+      await this.editMovieCmd.execute(
         this.data.movie.id,
         this.formGroup.value as any
       );
