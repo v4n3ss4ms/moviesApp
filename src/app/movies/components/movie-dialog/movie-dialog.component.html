@@ -16,6 +16,7 @@
     <input
       placeholder="year"
       type="number"
+      min="1900"
       formControlName="year"
       [class.error]="submitted && formGroup.get('year')?.errors"
     />
