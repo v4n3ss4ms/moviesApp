@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Movie, MovieRepository } from 'src/domain';
@@ -9,12 +9,14 @@ const MOVIES_API_URL = 'http://localhost:3000/movies';
   providedIn: 'root',
 })
 export class MovieLocalRepository implements MovieRepository {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   async getAll(
     page: string,
     filter: { title?: string; year?: number; rate?: number }
   ): Promise<Movie[]> {
+    const params = new HttpParams().set('page', page);
     let url = MOVIES_API_URL;
     Object.entries(filter)
       .filter(([key, value]) => !!value)
@@ -32,7 +34,7 @@ export class MovieLocalRepository implements MovieRepository {
             break;
         }
       });
-    return await firstValueFrom(this.http.get<Movie[]>(url));
+    return await firstValueFrom(this.http.get<Movie[]>(url, { params }));
   }
 
   async getMovieById(id: string): Promise<Movie> {
