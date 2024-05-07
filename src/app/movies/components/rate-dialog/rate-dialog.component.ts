@@ -45,7 +45,7 @@ export class RateDialogComponent {
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
       await this.moviesService.edit(
-        this.data.movie.id.toString(),
+        this.data.movie.id,
         this.formGroup.value as any
       );
       this.dialogRef.close();

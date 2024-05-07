@@ -51,7 +51,7 @@ export class MovieDialogComponent {
     if (this.formGroup.valid) {
       if (this.data.movie?.id) {
         await this.moviesService.edit(
-          this.data.movie.id.toString(),
+          this.data.movie.id,
           this.formGroup.value as any
         );
       } else {
@@ -62,7 +62,7 @@ export class MovieDialogComponent {
   }
 
   async delete() {
-    await this.moviesService.delete(this.data.movie.id.toString());
+    await this.moviesService.delete(this.data.movie.id);
     this.dialogRef.close();
   }
 }

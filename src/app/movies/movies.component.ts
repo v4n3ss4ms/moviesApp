@@ -53,7 +53,7 @@ export class MoviesComponent {
   }
 
   async delete(id: number) {
-    await this.moviesService.delete(id.toString());
+    await this.moviesService.delete(id);
     this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 

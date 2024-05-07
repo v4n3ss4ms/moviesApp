@@ -35,7 +35,7 @@ export class MovieLocalRepository implements MovieRepository {
     return await firstValueFrom(this.http.get<Movie[]>(url));
   }
 
-  async getMovieById(id: string): Promise<Movie> {
+  async getMovieById(id: number): Promise<Movie> {
     return await firstValueFrom(this.http.get<Movie>(`${MOVIES_API_URL}/${id}`));
   }
 
@@ -43,13 +43,13 @@ export class MovieLocalRepository implements MovieRepository {
     return await firstValueFrom(this.http.post<Movie>(MOVIES_API_URL, movie));
   }
 
-  async edit(id: string, movie: Partial<Movie>): Promise<Movie> {
+  async edit(id: number, movie: Partial<Movie>): Promise<Movie> {
     return await firstValueFrom(
       this.http.patch<Movie>(`${MOVIES_API_URL}/${id}`, movie)
     );
   }
 
-  async delete(id: string): Promise<Movie> {
+  async delete(id: number): Promise<Movie> {
     return await firstValueFrom(this.http.delete<Movie>(`${MOVIES_API_URL}/${id}`));
   }
 }
