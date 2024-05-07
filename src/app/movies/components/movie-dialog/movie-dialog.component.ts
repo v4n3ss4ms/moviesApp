@@ -8,10 +8,9 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ActorLocalRepository } from 'src/repositories';
-import { MovieLocalRepository } from 'src/repositories';
 import { Actor, Movie } from 'src/domain';
 import { DialogComponent } from '../../../components';
-import { CreateMovieCmd, EditMovieCmd } from '../../../../application';
+import { CreateMovieCmd, DeleteMovieCmd, EditMovieCmd } from '../../../../application';
 
 export interface DialogData {
   movie: Movie;
@@ -35,10 +34,10 @@ export class MovieDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private moviesService: MovieLocalRepository,
     private createMovieCmd: CreateMovieCmd,
     private editMovieCmd: EditMovieCmd,
     private actorsService: ActorLocalRepository,
+    private deleteMovieCmd: DeleteMovieCmd,
     private dialogRef: MatDialogRef<MovieDialogComponent>
   ) {
     this.formGroup.patchValue({ ...this.data.movie });
@@ -65,7 +64,7 @@ export class MovieDialogComponent {
   }
 
   async delete() {
-    await this.moviesService.delete(this.data.movie.id);
+    await this.deleteMovieCmd.execute(this.data.movie.id);
     this.dialogRef.close();
   }
 }

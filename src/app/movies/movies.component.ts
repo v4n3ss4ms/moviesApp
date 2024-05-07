@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieDialogComponent } from './components';
 import { RateDialogComponent } from './components';
-import { MovieLocalRepository } from 'src/repositories';
 import { Movie } from 'src/domain';
-import { GeMoviesCollectionQry } from '../../application';
+import { DeleteMovieCmd, GeMoviesCollectionQry } from '../../application';
 
 @Component({
   selector: 'app-movies',
@@ -17,8 +16,8 @@ export class MoviesComponent {
   filter: { title?: string; year?: number; rate?: number } = {};
 
   constructor(
-    private moviesService: MovieLocalRepository,
     private geMoviesCollectionQry: GeMoviesCollectionQry,
+    private deleteMovieCmd: DeleteMovieCmd,
     private dialog: MatDialog
   ) {}
 
@@ -53,7 +52,7 @@ export class MoviesComponent {
   }
 
   async delete(id: number) {
-    await this.moviesService.delete(id);
+    await this.deleteMovieCmd.execute(id);
     this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
