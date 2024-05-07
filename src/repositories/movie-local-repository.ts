@@ -11,7 +11,7 @@ const MOVIES_API_URL = 'http://localhost:3000/movies';
 export class MovieLocalRepository implements MovieRepository {
   constructor(private http: HttpClient) {}
 
-  getAll(
+  async getAll(
     page: string,
     filter: { title?: string; year?: number; rate?: number }
   ): Promise<Movie[]> {
@@ -32,24 +32,24 @@ export class MovieLocalRepository implements MovieRepository {
             break;
         }
       });
-    return firstValueFrom(this.http.get(url)) as any;
+    return await firstValueFrom(this.http.get<Movie[]>(url));
   }
 
-  getSingle(id: string): Promise<Movie> {
-    return firstValueFrom(this.http.get(`${MOVIES_API_URL}/${id}`)) as any;
+  async getMovieById(id: string): Promise<Movie> {
+    return await firstValueFrom(this.http.get<Movie>(`${MOVIES_API_URL}/${id}`));
   }
 
-  create(movie: Partial<Movie>): Promise<Movie> {
-    return firstValueFrom(this.http.post(MOVIES_API_URL, movie)) as any;
+  async create(movie: Partial<Movie>): Promise<Movie> {
+    return await firstValueFrom(this.http.post<Movie>(MOVIES_API_URL, movie));
   }
 
-  edit(id: string, movie: Partial<Movie>): Promise<Movie> {
-    return firstValueFrom(
-      this.http.patch(`${MOVIES_API_URL}/${id}`, movie)
-    ) as any;
+  async edit(id: string, movie: Partial<Movie>): Promise<Movie> {
+    return await firstValueFrom(
+      this.http.patch<Movie>(`${MOVIES_API_URL}/${id}`, movie)
+    );
   }
 
-  delete(id: string): Promise<Movie> {
-    return firstValueFrom(this.http.delete(`${MOVIES_API_URL}/${id}`)) as any;
+  async delete(id: string): Promise<Movie> {
+    return await firstValueFrom(this.http.delete<Movie>(`${MOVIES_API_URL}/${id}`));
   }
 }

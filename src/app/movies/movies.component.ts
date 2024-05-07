@@ -4,6 +4,7 @@ import { MovieDialogComponent } from './components';
 import { RateDialogComponent } from './components';
 import { MovieLocalRepository } from 'src/repositories';
 import { Movie } from 'src/domain';
+import { GeMoviesCollectionQry } from '../../application';
 
 @Component({
   selector: 'app-movies',
@@ -17,11 +18,12 @@ export class MoviesComponent {
 
   constructor(
     private moviesService: MovieLocalRepository,
+    private geMoviesCollectionQry: GeMoviesCollectionQry,
     private dialog: MatDialog
   ) {}
 
   async ngOnInit() {
-    this.movies  = await this.moviesService.getAll('1', this.filter);
+    this.movies  = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
   preview(id: number) {
@@ -33,7 +35,7 @@ export class MoviesComponent {
       })
       .afterClosed()
       .subscribe(async () => {
-        this.movies = await this.moviesService.getAll('1', this.filter);
+        this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
       });
   }
 
@@ -46,13 +48,13 @@ export class MoviesComponent {
       })
       .afterClosed()
       .subscribe(async () => {
-        this.movies = await this.moviesService.getAll('1', this.filter);
+        this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
       });
   }
 
   async delete(id: number) {
     await this.moviesService.delete(id.toString());
-    this.movies = await this.moviesService.getAll('1', this.filter);
+    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
   add() {
@@ -61,16 +63,16 @@ export class MoviesComponent {
 
   async onTitleChange(e: Event) {
     this.filter.title = (e.target as HTMLInputElement).value;
-    this.movies = await this.moviesService.getAll('1', this.filter);
+    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
   async onYearChange(e: Event) {
     this.filter.year = +(e.target as HTMLInputElement).value;
-    this.movies = await this.moviesService.getAll('1', this.filter);
+    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 
   async onRateChange(e: Event) {
     this.filter.rate = +(e.target as HTMLInputElement).value;
-    this.movies = await this.moviesService.getAll('1', this.filter);
+    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
   }
 }
