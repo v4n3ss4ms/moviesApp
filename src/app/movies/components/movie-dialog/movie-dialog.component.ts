@@ -25,7 +25,8 @@ export interface DialogData {
 })
 export class MovieDialogComponent {
   public actors: Actor[] = [];
-  public submitted = false;
+  public isEdit: boolean = false;
+  public submitted: boolean = false;
   public formGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     year: new FormControl(0, []),
@@ -45,13 +46,14 @@ export class MovieDialogComponent {
 
   async ngOnInit() {
     this.actors = await this.actorsService.getAll('1');
+    this.isEdit = !!this.data.movie?.id;
   }
 
   async submit() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      if (this.data.movie?.id) {
+      if (this.isEdit) {
         await this.editMovieCmd.execute(
           this.data.movie.id,
           this.formGroup.value as any

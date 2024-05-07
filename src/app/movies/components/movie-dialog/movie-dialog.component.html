@@ -1,6 +1,6 @@
 <app-dialog>
   <h2 title>
-    @if (data.movie && data.movie.id) {
+    @if (isEdit) {
       Edit movie with id = {{ data.movie.id }}
     } @else {
       Add new movie
@@ -26,6 +26,8 @@
       }
     </select>
     <button (click)="submit()" class="submit">Save!</button>
-    <button (click)="delete()" class="submit">Delete!</button>
+    @if (isEdit) {
+      <button (click)="delete()" class="submit">Delete!</button>
+    }
   </form>
 </app-dialog>
