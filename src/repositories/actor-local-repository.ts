@@ -11,19 +11,19 @@ const ACTORS_API_URL = 'http://localhost:3000/actors';
 export class ActorLocalRepository implements ActorRepository {
   constructor(private http: HttpClient) {}
 
-  getAll(page: string, filter?: { name: string }): Promise<Actor[]> {
+  async getAll(page: string, filter?: { name: string }): Promise<Actor[]> {
     let url = ACTORS_API_URL;
     if (filter?.name) {
       url += `?name_like=${filter.name}`;
     }
-    return firstValueFrom(this.http.get(url)) as any;
+    return await firstValueFrom(this.http.get<Actor[]>(url));
   }
 
-  getActorById(id: string): Promise<Actor> {
-    return firstValueFrom(this.http.get(`${ACTORS_API_URL}/${id}`)) as any;
+  async getActorById(id: string): Promise<Actor> {
+    return await firstValueFrom(this.http.get<Actor>(`${ACTORS_API_URL}/${id}`));
   }
 
-  create(actor: Partial<Actor>): Promise<Actor> {
-    return firstValueFrom(this.http.post(ACTORS_API_URL, actor)) as any;
+  async create(actor: Partial<Actor>): Promise<Actor> {
+    return await firstValueFrom(this.http.post<Actor>(ACTORS_API_URL, actor));
   }
 }

@@ -46,7 +46,7 @@ export class RateDialogComponent {
     if (this.formGroup.valid) {
       await this.editMovieCmd.execute(
         this.data.movie.id,
-        this.formGroup.value as any
+        this.formGroup.value as Partial<Movie>
       );
       this.dialogRef.close();
     }

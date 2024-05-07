@@ -29,8 +29,8 @@ export class MovieDialogComponent {
   public submitted: boolean = false;
   public formGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    year: new FormControl(1900, []),
-    actors: new FormControl([] as any, []),
+    year: new FormControl(1900, [Validators.required]),
+    actors: new FormControl([] as string[], []),
   });
 
   constructor(
@@ -58,10 +58,10 @@ export class MovieDialogComponent {
     if (this.isEdit) {
       await this.editMovieCmd.execute(
         this.data.movie.id,
-        this.formGroup.value as any
+        this.formGroup.value as Partial<Movie>
       );
     } else {
-      await this.createMovieCmd.execute(this.formGroup.value as any);
+      await this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>);
     }
     this.dialogRef.close();
   }

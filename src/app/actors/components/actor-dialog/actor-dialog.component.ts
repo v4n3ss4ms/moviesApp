@@ -38,7 +38,7 @@ export class ActorDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      await this.createActorCmd.execute(this.formGroup.value as any);
+      await this.createActorCmd.execute(this.formGroup.value as Partial<Actor>);
       this.dialogRef.close();
     }
   }
