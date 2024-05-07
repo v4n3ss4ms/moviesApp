@@ -19,7 +19,7 @@ export class ActorLocalRepository implements ActorRepository {
     return firstValueFrom(this.http.get(url)) as any;
   }
 
-  getSingle(id: string): Promise<Actor> {
+  getActorById(id: string): Promise<Actor> {
     return firstValueFrom(this.http.get(`${ACTORS_API_URL}/${id}`)) as any;
   }
 

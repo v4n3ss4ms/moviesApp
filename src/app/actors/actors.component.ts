@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { Actor } from 'src/domain';
-import { ActorLocalRepository } from 'src/repositories';
 import { ActorDialogComponent } from './components';
+import { GetActorsCollectionQry } from '../../application';
 
 @Component({
   selector: 'app-actors',
@@ -16,17 +16,17 @@ export class ActorsComponent {
   private search = '';
 
   constructor(
-    private actorRepository: ActorLocalRepository,
+    private getActorsCollectionQry: GetActorsCollectionQry,
     private dialog: MatDialog
   ) {}
 
   async ngOnInit() {
-    this.actors = await this.actorRepository.getAll('1');
+    this.actors = await this.getActorsCollectionQry.execute('1');
   }
 
   async onSearchChange(e: Event) {
     this.search = (e.target as HTMLInputElement).value;
-    this.actors = await this.actorRepository.getAll('1', {
+    this.actors = await this.getActorsCollectionQry.execute('1', {
       name: this.search,
     });
   }
@@ -38,7 +38,7 @@ export class ActorsComponent {
       })
       .afterClosed()
       .subscribe(async () => {
-        this.actors = await this.actorRepository.getAll('1', {
+        this.actors = await this.getActorsCollectionQry.execute('1', {
           name: this.search,
         });
       });

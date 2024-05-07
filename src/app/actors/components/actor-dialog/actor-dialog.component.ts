@@ -8,9 +8,8 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Actor } from 'src/domain';
-
-import { ActorLocalRepository } from 'src/repositories';
 import { DialogComponent } from '../../../components';
+import { CreateActorCmd } from '../../../../application';
 
 export interface DialogData {
   actor: Actor;
@@ -31,7 +30,7 @@ export class ActorDialogComponent {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-    private actorRepository: ActorLocalRepository,
+    private createActorCmd: CreateActorCmd,
     private dialogRef: MatDialogRef<ActorDialogComponent>
   ) {}
 
@@ -39,7 +38,7 @@ export class ActorDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      await this.actorRepository.create(this.formGroup.value as any);
+      await this.createActorCmd.execute(this.formGroup.value as any);
       this.dialogRef.close();
     }
   }
