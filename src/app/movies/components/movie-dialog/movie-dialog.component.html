@@ -26,7 +26,20 @@
         <option [value]="actor.name">{{ actor.name }}</option>
       }
     </select>
+
+    @if (submitted && !this.formGroup.valid) {
+      <ul class="required-error required-error-list">
+        @if (formGroup.get('title')?.errors) {
+          <li>* Please, Title is required</li>
+        }
+        @if (formGroup.get('year')?.errors) {
+          <li>* Please, Year is required</li>
+        }
+      </ul>
+    }
+
     <button (click)="submit()" class="submit">Save!</button>
+
     @if (isEdit) {
       <button (click)="delete()" class="submit">Delete!</button>
     }

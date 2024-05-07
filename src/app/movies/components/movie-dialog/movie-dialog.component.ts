@@ -29,7 +29,7 @@ export class MovieDialogComponent {
   public submitted: boolean = false;
   public formGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    year: new FormControl(0, []),
+    year: new FormControl(1900, []),
     actors: new FormControl([] as any, []),
   });
 
@@ -52,17 +52,18 @@ export class MovieDialogComponent {
   async submit() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
-    if (this.formGroup.valid) {
-      if (this.isEdit) {
-        await this.editMovieCmd.execute(
-          this.data.movie.id,
-          this.formGroup.value as any
-        );
-      } else {
-        await this.createMovieCmd.execute(this.formGroup.value as any);
-      }
-      this.dialogRef.close();
+    if (!this.formGroup.valid) {
+      return;
     }
+    if (this.isEdit) {
+      await this.editMovieCmd.execute(
+        this.data.movie.id,
+        this.formGroup.value as any
+      );
+    } else {
+      await this.createMovieCmd.execute(this.formGroup.value as any);
+    }
+    this.dialogRef.close();
   }
 
   async delete() {

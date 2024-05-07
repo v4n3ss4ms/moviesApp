@@ -8,4 +8,12 @@
     />
     <button (click)="add()" class="submit">Add!</button>
   </form>
+
+  @if (submitted && !this.formGroup.valid) {
+    <ul class="required-error required-error-list">
+      @if (formGroup.get('name')?.errors) {
+        <li>* Please, Name is required</li>
+      }
+    </ul>
+  }
 </app-dialog>
