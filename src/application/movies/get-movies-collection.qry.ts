@@ -3,7 +3,7 @@ import { MovieLocalRepository } from '../../repositories';
 import { Movie } from '../../domain';
 
 @Injectable({ providedIn: 'root' })
-export class GeMoviesCollectionQry {
+export class GetMoviesCollectionQry {
   constructor(private movieRepository: MovieLocalRepository) {}
 
   async execute(

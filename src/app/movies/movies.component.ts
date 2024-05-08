@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MovieDialogComponent } from './components';
 import { RateDialogComponent } from './components';
 import { Movie } from 'src/domain';
-import { DeleteMovieCmd, GeMoviesCollectionQry } from '../../application';
+import { DeleteMovieCmd, GetMoviesCollectionQry } from '../../application';
 
 @Component({
   selector: 'app-movies',
@@ -16,7 +16,7 @@ export class MoviesComponent {
   filter: { title?: string; year?: number; rate?: number } = {};
 
   constructor(
-    private geMoviesCollectionQry: GeMoviesCollectionQry,
+    private geMoviesCollectionQry: GetMoviesCollectionQry,
     private deleteMovieCmd: DeleteMovieCmd,
     private dialog: MatDialog
   ) {}
