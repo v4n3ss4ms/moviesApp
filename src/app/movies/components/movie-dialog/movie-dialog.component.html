@@ -6,7 +6,7 @@
       Add new movie
     }
   </h2>
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" (submit)="submit()">
     <input
       placeholder="title"
       type="text"
@@ -38,10 +38,10 @@
       </ul>
     }
 
-    <button (click)="submit()" class="submit">Save!</button>
-
-    @if (isEdit) {
-      <button (click)="delete()" class="submit">Delete!</button>
-    }
+    <button type="submit" class="submit">Save!</button>
   </form>
+
+  @if (isEdit) {
+    <button (click)="delete()" class="submit">Delete!</button>
+  }
 </app-dialog>

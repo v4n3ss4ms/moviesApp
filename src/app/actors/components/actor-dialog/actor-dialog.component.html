@@ -1,13 +1,13 @@
 <app-dialog>
   <h2 title>Add new actor</h2>
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" (submit)="add()">
     <input
       placeholder="Name"
       type="text"
       formControlName="name"
       [class.error]="submitted && formGroup.get('name')?.errors"
     />
-    <button (click)="add()" class="submit">Add!</button>
+    <button type="submit" class="submit">Add!</button>
   </form>
 
   @if (submitted && !this.formGroup.valid) {
