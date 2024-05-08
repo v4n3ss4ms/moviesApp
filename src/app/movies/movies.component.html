@@ -1,34 +1,35 @@
-<h3>Yokoy movies</h3>
-<div class="table-header">
-  <div class="filters" style="margin-bottom: 12px">
-    <input
-      type="text"
-      name="title"
-      placeholder="Title"
-      (keyup)="onTitleChange($event)"
-    />
-    <input
-      type="number"
-      name="year"
-      min="1900"
-      placeholder="Year"
-      (keyup)="onYearChange($event)"
-      (change)="onYearChange($event)"
-    />
-    <input
-      type="number"
-      name="rate"
-      placeholder="Rate"
-      min="0"
-      max="10"
-      (keyup)="onRateChange($event)"
-      (change)="onRateChange($event)"
-    />
-  </div>
-  <button (click)="add()">Add</button>
-</div>
-<table>
-  <thead>
+<section class="results-movies">
+  <h3 class="results-movies__title">Yokoy movies</h3>
+  <header class="table-header">
+    <div class="table-header__filters">
+      <input
+        type="text"
+        name="title"
+        placeholder="Title"
+        (keyup)="onTitleChange($event)"
+      />
+      <input
+        type="number"
+        name="year"
+        min="1900"
+        placeholder="Year"
+        (keyup)="onYearChange($event)"
+        (change)="onYearChange($event)"
+      />
+      <input
+        type="number"
+        name="rate"
+        placeholder="Rate"
+        min="0"
+        max="10"
+        (keyup)="onRateChange($event)"
+        (change)="onRateChange($event)"
+      />
+    </div>
+    <button class="table-header__action" (click)="add()">Add</button>
+  </header>
+  <table class="table-results">
+    <thead class="table-results__header">
     <tr>
       <td>Id</td>
       <td>Name</td>
@@ -37,22 +38,24 @@
       <td>Rate</td>
       <td>Actions</td>
     </tr>
-  </thead>
-  <tbody>
-  @for(movie of movies; track movie.id) {
-    <tr>
-      <td>{{ movie.id }}</td>
-      <td>{{ movie.title }}</td>
-      <td>{{ movie.year }}</td>
-      <td>{{ movie.actors }}</td>
-      <td>{{ movie.rate ? movie.rate + "/ 10" : "-" }}</td>
-      <td>
-        <a class="table-link" (click)="preview(movie.id)">Preview</a> |
-        <a class="table-link" (click)="rate(movie.id)">Rate</a> |
-        <a class="table-link" (click)="delete(movie.id)">Delete</a>
-      </td>
-    </tr>
-  }
+    </thead>
+    <tbody class="table-results__body">
+      @for (movie of movies; track movie.id) {
+        <tr class="table-results__row">
+          <td class="table-results__cell">{{ movie.id }}</td>
+          <td class="table-results__cell">{{ movie.title }}</td>
+          <td class="table-results__cell">{{ movie.year }}</td>
+          <td class="table-results__cell">{{ movie.actors }}</td>
+          <td class="table-results__cell">{{ movie.rate ? movie.rate + "/ 10" : "-" }}</td>
+          <td>
+            <a class="table-results__link" (click)="preview(movie.id)">Preview</a> |
+            <a class="table-results__link" (click)="rate(movie.id)">Rate</a> |
+            <a class="table-results__link" (click)="delete(movie.id)">Delete</a>
+          </td>
+        </tr>
+      }
 
-  </tbody>
-</table>
+    </tbody>
+  </table>
+
+</section>

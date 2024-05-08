@@ -1,30 +1,32 @@
-<h3>Yokoy actors</h3>
-<div class="filters" style="margin-bottom: 12px">
-  <div class="search">
-    <label for="search">Search: </label>
-    <input
-      type="text"
-      id="search"
-      name="search"
-      placeholder="Search"
-      (keyup)="onSearchChange($event)"
-    />
-  </div>
-  <button (click)="addNew()">Add</button>
-</div>
-<table>
-  <thead>
+<section class="results-actors">
+  <h3 class="results-actors__title">Yokoy actors</h3>
+  <header class="table-header">
+    <div class="table-header__filters">
+      <label for="search">Search: </label>
+      <input
+        type="text"
+        id="search"
+        name="search"
+        placeholder="Search"
+        (keyup)="onSearchChange($event)"
+      />
+    </div>
+    <button class="table-header__action" (click)="addNew()">Add</button>
+  </header>
+  <table class="table-results">
+    <thead class="table-results__header">
     <tr>
       <td>Id</td>
       <td>Name</td>
     </tr>
-  </thead>
-  <tbody>
-  @for(actor of actors; track actor.id) {
-    <tr>
-      <td>{{ actor.id }}</td>
-      <td>{{ actor.name }}</td>
-    </tr>
-  }
-  </tbody>
-</table>
+    </thead>
+    <tbody class="table-results__body">
+      @for (actor of actors; track actor.id) {
+        <tr class="table-results__row">
+          <td class="table-results__cell">{{ actor.id }}</td>
+          <td class="table-results__cell">{{ actor.name }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

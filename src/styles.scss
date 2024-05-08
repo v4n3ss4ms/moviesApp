@@ -1,20 +1,46 @@
 @import url(./assets/styles/reset.css);
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+  --c-primary: hsl(47, 92%, 53%);
+  --c-primary--ligth: hsl(47, 72%, 62%);
+  --c-secondary: hsl(202, 16%, 73%);
+  --c-black: hsl(0, 0%, 0%);
+  --c-white: hsl(0, 0%, 100%);
+  --c-error: hsl(0, 100%, 50%);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: var(--c-secondary);
+}
 
 
 input {
   &.error {
-    border: 1px solid red;
+    border: 1px solid var(--c-error);
   }
 }
 
 .required-error {
-  &-list{
+  &-list {
     margin: 0;
     padding: 0;
     list-style-type: none;
   }
-  color: #FF0000;
+
+  color: var(--c-error);
+}
+
+a {
+  text-decoration: none;
+  color: hsl(203, 88%, 17%);
+
+  &:hover {
+    color: hsl(203, 89%, 7%);
+  }
 }
