@@ -4,11 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CreateActorCmd } from '../../../../application';
 import { createMock } from '@testing-library/angular/jest-utils';
 
-
 describe('ActorDialogComponent', () => {
-
   it('should display error message when form is submitted and name is not provided', async () => {
-
     const createActorCmd = createMock(CreateActorCmd);
     createActorCmd.execute = jest.fn();
 
@@ -24,5 +21,29 @@ describe('ActorDialogComponent', () => {
     fireEvent.click(button);
 
     expect(screen.getByText('* Please, Name is required')).toBeTruthy();
+  });
+
+  it('should call create actor use case', async () => {
+    const AN_ACTOR = 'AN_ACTOR';
+    const createActorCmd = createMock(CreateActorCmd);
+    const dialogRef = createMock(MatDialogRef);
+    createActorCmd.execute = jest.fn();
+    dialogRef.close = jest.fn();
+
+    await render(ActorDialogComponent, {
+      componentProviders: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: dialogRef },
+        { provide: CreateActorCmd, useValue: createActorCmd }
+      ],
+    });
+
+    const input = screen.getByRole('textbox');
+    fireEvent.input(input, { target: { value: AN_ACTOR } });
+
+    const button = screen.getByText('Add!');
+    fireEvent.click(button);
+
+    expect(createActorCmd.execute).toHaveBeenCalledWith({ name: AN_ACTOR });
   });
 });
