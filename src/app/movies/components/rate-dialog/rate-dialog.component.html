@@ -1,6 +1,6 @@
 <app-dialog>
   <h2 title>Rate movie {{ data.movie.title }}</h2>
-  <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup" (submit)="rate()">
     <input
       type="number"
       max="10"
@@ -8,6 +8,6 @@
       formControlName="rate"
       [class.error]="submitted && formGroup.get('rate')?.errors"
     />
-    <button (click)="rate()" class="submit">Rate!</button>
+    <button type="submit" class="submit">Rate!</button>
   </form>
 </app-dialog>
