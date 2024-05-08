@@ -7,10 +7,9 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActorLocalRepository } from 'src/repositories';
 import { Actor, Movie } from 'src/domain';
 import { DialogComponent } from '../../../components';
-import { CreateMovieCmd, DeleteMovieCmd, EditMovieCmd } from '../../../../application';
+import { CreateMovieCmd, DeleteMovieCmd, EditMovieCmd, GetActorsCollectionQry } from '../../../../application';
 
 export interface DialogData {
   movie: Movie;
@@ -37,7 +36,7 @@ export class MovieDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private createMovieCmd: CreateMovieCmd,
     private editMovieCmd: EditMovieCmd,
-    private actorsService: ActorLocalRepository,
+    private getActorsCollectionQry: GetActorsCollectionQry,
     private deleteMovieCmd: DeleteMovieCmd,
     private dialogRef: MatDialogRef<MovieDialogComponent>
   ) {
@@ -45,7 +44,7 @@ export class MovieDialogComponent {
   }
 
   async ngOnInit() {
-    this.actors = await this.actorsService.getAll('1');
+    this.actors = await this.getActorsCollectionQry.execute('1');
     this.isEdit = !!this.data.movie?.id;
   }
 
