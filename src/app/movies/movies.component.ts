@@ -64,6 +64,10 @@ export class MoviesComponent {
     });
   }
 
+  add() {
+    this.preview('0');
+  }
+
   onTitleChange(e: Event) {
     this.filter.title = (e.target as HTMLInputElement).value;
     this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
@@ -84,5 +88,4 @@ export class MoviesComponent {
       this.movies = movies;
     });
   }
-
 }

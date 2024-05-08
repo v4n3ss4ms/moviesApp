@@ -17,8 +17,8 @@ describe('ActorDialogComponent', () => {
       ],
     });
 
-    const button = screen.getByText('Add!');
-    fireEvent.click(button);
+    const addBtn = screen.getByText('Add!');
+    fireEvent.click(addBtn);
 
     expect(screen.getByText('* Please, Name is required')).toBeTruthy();
   });
@@ -36,11 +36,11 @@ describe('ActorDialogComponent', () => {
       ],
     });
 
-    const input = screen.getByRole('textbox');
-    fireEvent.input(input, { target: { value: AN_ACTOR } });
+    const nameInput = screen.getByPlaceholderText('Name');
+    fireEvent.input(nameInput, { target: { value: AN_ACTOR } });
 
-    const button = screen.getByText('Add!');
-    fireEvent.click(button);
+    const addBtn = screen.getByText('Add!');
+    fireEvent.click(addBtn);
 
     expect(createActorCmd.execute).toHaveBeenCalledWith({ name: AN_ACTOR });
   });
