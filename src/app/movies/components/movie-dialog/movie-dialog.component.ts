@@ -43,30 +43,32 @@ export class MovieDialogComponent {
     this.formGroup.patchValue({ ...this.data.movie });
   }
 
-  async ngOnInit() {
-    this.actors = await this.getActorsCollectionQry.execute('1');
+  ngOnInit() {
+    this.getActorsCollectionQry.execute('1').subscribe(actors => {
+      this.actors = actors;
+    });
     this.isEdit = !!this.data.movie?.id;
   }
 
-  async submit() {
+  submit() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (!this.formGroup.valid) {
       return;
     }
     if (this.isEdit) {
-      await this.editMovieCmd.execute(
+      this.editMovieCmd.execute(
         this.data.movie.id,
         this.formGroup.value as Partial<Movie>
       );
     } else {
-      await this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>);
+      this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>);
     }
     this.dialogRef.close();
   }
 
-  async delete() {
-    await this.deleteMovieCmd.execute(this.data.movie.id);
+  delete() {
+    this.deleteMovieCmd.execute(this.data.movie.id);
     this.dialogRef.close();
   }
 }

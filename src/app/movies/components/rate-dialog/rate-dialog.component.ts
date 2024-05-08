@@ -40,11 +40,11 @@ export class RateDialogComponent {
     this.formGroup.patchValue({ rate: this.data.movie.rate });
   }
 
-  async rate() {
+  rate() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      await this.editMovieCmd.execute(
+      this.editMovieCmd.execute(
         this.data.movie.id,
         this.formGroup.value as Partial<Movie>
       );

@@ -21,8 +21,10 @@ export class MoviesComponent {
     private dialog: MatDialog
   ) {}
 
-  async ngOnInit() {
-    this.movies  = await this.geMoviesCollectionQry.execute('1', this.filter);
+  ngOnInit() {
+    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+      this.movies = movies;
+    });
   }
 
   preview(id: string) {
@@ -33,8 +35,10 @@ export class MoviesComponent {
         data: { movie: selectedMovie },
       })
       .afterClosed()
-      .subscribe(async () => {
-        this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
+      .subscribe(() => {
+        this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+          this.movies = movies;
+        });
       });
   }
 
@@ -46,32 +50,39 @@ export class MoviesComponent {
         data: { movie: selectedMovie },
       })
       .afterClosed()
-      .subscribe(async () => {
-        this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
+      .subscribe(() => {
+        this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+          this.movies = movies;
+        });
       });
   }
 
-  async delete(id: string) {
-    await this.deleteMovieCmd.execute(id);
-    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
+  delete(id: string) {
+    this.deleteMovieCmd.execute(id);
+    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+      this.movies = movies;
+    });
   }
 
-  add() {
-    this.preview('0');
-  }
-
-  async onTitleChange(e: Event) {
+  onTitleChange(e: Event) {
     this.filter.title = (e.target as HTMLInputElement).value;
-    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
+    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+      this.movies = movies;
+    });
   }
 
-  async onYearChange(e: Event) {
+  onYearChange(e: Event) {
     this.filter.year = +(e.target as HTMLInputElement).value;
-    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
+    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+      this.movies = movies;
+    });
   }
 
-  async onRateChange(e: Event) {
+  onRateChange(e: Event) {
     this.filter.rate = +(e.target as HTMLInputElement).value;
-    this.movies = await this.geMoviesCollectionQry.execute('1', this.filter);
+    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+      this.movies = movies;
+    });
   }
+
 }
