@@ -5,15 +5,15 @@ import { CreateActorCmd } from '../../../../application';
 import { createMock } from '@testing-library/angular/jest-utils';
 
 describe('ActorDialogComponent', () => {
-  it('should display error message when form is submitted and name is not provided', async () => {
-    const createActorCmd = createMock(CreateActorCmd);
-    createActorCmd.execute = jest.fn();
+  const createActorCmd = createMock(CreateActorCmd);
+  createActorCmd.execute = jest.fn();
 
+  it('should display error message when form is submitted and name is not provided', async () => {
     await render(ActorDialogComponent, {
       componentProviders: [
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
-        { provide: CreateActorCmd, useValue: createActorCmd}
+        { provide: CreateActorCmd, useValue: createActorCmd }
       ],
     });
 
@@ -25,9 +25,7 @@ describe('ActorDialogComponent', () => {
 
   it('should call create actor use case', async () => {
     const AN_ACTOR = 'AN_ACTOR';
-    const createActorCmd = createMock(CreateActorCmd);
     const dialogRef = createMock(MatDialogRef);
-    createActorCmd.execute = jest.fn();
     dialogRef.close = jest.fn();
 
     await render(ActorDialogComponent, {
