@@ -1,34 +1,43 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Actor } from 'src/domain';
+import { ActorFilters } from 'src/domain';
 import { ActorDialogComponent } from './components';
 import { GetActorsCollectionQry } from '../../application';
+import { ActorsStoreService } from '../services/actors-store.service';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-actors',
   standalone: true,
   templateUrl: './actors.component.html',
   styleUrls: ['./actors.component.scss'],
+  imports: [
+    AsyncPipe
+  ]
 })
 export class ActorsComponent {
-  actors: Actor[] = [];
-  private search = '';
+  private filter: ActorFilters = { name: '' };
+  actors$ = this.actorsStoreService.actors$;
 
   constructor(
     private getActorsCollectionQry: GetActorsCollectionQry,
+    private actorsStoreService: ActorsStoreService,
     private dialog: MatDialog
   ) {}
 
   async ngOnInit() {
-    this.actors = await this.getActorsCollectionQry.execute('1');
+    await this.getMoviesCollection();
+  }
+
+  async getMoviesCollection() {
+    const actors = await this.getActorsCollectionQry.execute('1', this.filter);
+    this.actorsStoreService.setActors(actors);
   }
 
   async onSearchChange(e: Event) {
-    this.search = (e.target as HTMLInputElement).value;
-    this.actors = await this.getActorsCollectionQry.execute('1', {
-      name: this.search,
-    });
+    this.filter.name = (e.target as HTMLInputElement).value;
+    await this.getMoviesCollection();
   }
 
   addNew() {
@@ -38,9 +47,7 @@ export class ActorsComponent {
       })
       .afterClosed()
       .subscribe(async () => {
-        this.actors = await this.getActorsCollectionQry.execute('1', {
-          name: this.search,
-        });
+        await this.getMoviesCollection();
       });
   }
 }

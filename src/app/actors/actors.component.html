@@ -21,7 +21,7 @@
     </tr>
     </thead>
     <tbody class="table-results__body">
-      @for (actor of actors; track actor.id) {
+      @for (actor of actors$ | async; track actor.id) {
         <tr class="table-results__row">
           <td class="table-results__cell">{{ actor.id }}</td>
           <td class="table-results__cell">{{ actor.name }}</td>

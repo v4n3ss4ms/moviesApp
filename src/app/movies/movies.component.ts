@@ -5,6 +5,7 @@ import { RateDialogComponent } from './components';
 import { DeleteMovieCmd, GetMoviesCollectionQry } from '../../application';
 import { CommonModule } from '@angular/common';
 import { MoviesStoreService } from '../services';
+import { MovieFilters } from '../../domain';
 
 @Component({
   selector: 'app-movies',
@@ -14,7 +15,7 @@ import { MoviesStoreService } from '../services';
   styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent {
-  filter: { title?: string; year?: number; rate?: number } = {};
+  filter: MovieFilters = {};
   movies$ = this.moviesStoreService.movies$;
 
   constructor(
