@@ -10,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Movie } from 'src/domain';
 import { DialogComponent } from '../../../components';
 import { EditMovieCmd } from '../../../../application';
+import { MoviesStoreService } from '../../../services';
 
 export interface RateDialogData {
   movie: Movie;
@@ -35,20 +36,22 @@ export class RateDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: RateDialogData,
     private editMovieCmd: EditMovieCmd,
+    private moviesStoreService: MoviesStoreService,
     private dialogRef: MatDialogRef<RateDialogComponent>
   ) {
     this.formGroup.patchValue({ rate: this.data.movie.rate });
   }
 
-  rate() {
+  async rate() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-
-      const rateCmd = this.editMovieCmd.execute(this.data.movie.id, this.formGroup.value as Partial<Movie>).subscribe(()=>{
-        rateCmd.unsubscribe();
-        this.dialogRef.close();
-      });
+      const updatedMovie:Movie = await this.editMovieCmd.execute(
+        this.data.movie.id,
+        this.formGroup.value as Partial<Movie>
+      );
+      this.moviesStoreService.editMovie(this.data.movie.id,updatedMovie)
+      this.dialogRef.close();
     }
   }
 }

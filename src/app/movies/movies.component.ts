@@ -2,99 +2,85 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieDialogComponent } from './components';
 import { RateDialogComponent } from './components';
-import { Movie } from 'src/domain';
 import { DeleteMovieCmd, GetMoviesCollectionQry } from '../../application';
+import { CommonModule } from '@angular/common';
+import { MoviesStoreService } from '../services';
 
 @Component({
   selector: 'app-movies',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent {
-  movies: Movie[] = [];
   filter: { title?: string; year?: number; rate?: number } = {};
+  movies$ = this.moviesStoreService.movies$;
 
   constructor(
-    private geMoviesCollectionQry: GetMoviesCollectionQry,
+    private getMoviesCollectionQry: GetMoviesCollectionQry,
     private deleteMovieCmd: DeleteMovieCmd,
+    private moviesStoreService: MoviesStoreService,
     private dialog: MatDialog
-  ) {}
+  ) {
+  }
 
-  ngOnInit() {
-    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-      this.movies = movies;
-      getMoviesQry.unsubscribe();
-    });
+  async ngOnInit() {
+    await this.getMoviesCollection();
+  }
+
+  async getMoviesCollection() {
+    const movies = await this.getMoviesCollectionQry.execute('1', this.filter);
+    this.moviesStoreService.setMovies(movies);
   }
 
   preview(id: string) {
-    const selectedMovie = this.movies.find((m) => m.id === id);
+    const selectedMovie = this.moviesStoreService.getMovies().find((m) => m.id === id);
     this.dialog
       .open(MovieDialogComponent, {
         minWidth: '300px',
         data: { movie: selectedMovie },
       })
       .afterClosed()
-      .subscribe(() => {
-        const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-          this.movies = movies;
-          getMoviesQry.unsubscribe();
-        });
+      .subscribe(async () => {
+        await this.getMoviesCollection();
       });
   }
 
   rate(id: string) {
-    const selectedMovie = this.movies.find((m) => m.id === id);
+    const selectedMovie = this.moviesStoreService.getMovies().find((m) => m.id === id);
     this.dialog
       .open(RateDialogComponent, {
         minWidth: '300px',
         data: { movie: selectedMovie },
       })
       .afterClosed()
-      .subscribe(() => {
-        const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-          this.movies = movies;
-          getMoviesQry.unsubscribe();
-        });
+      .subscribe(async () => {
+        await this.getMoviesCollection();
       });
   }
 
-  delete(id: string) {
-    const delCmd = this.deleteMovieCmd.execute(id).subscribe(() => {
-      delCmd.unsubscribe();
-      const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-        this.movies = movies;
-        getMoviesQry.unsubscribe();
-      });
-    });
+  async delete(id: string) {
+    await this.deleteMovieCmd.execute(id);
+    this.moviesStoreService.deleteMovie(id);
   }
 
   add() {
     this.preview('0');
   }
 
-  onTitleChange(e: Event) {
+  async onTitleChange(e: Event) {
     this.filter.title = (e.target as HTMLInputElement).value;
-    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-      this.movies = movies;
-      getMoviesQry.unsubscribe();
-    });
+    await this.getMoviesCollection();
   }
 
-  onYearChange(e: Event) {
+  async onYearChange(e: Event) {
     this.filter.year = +(e.target as HTMLInputElement).value;
-    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-      this.movies = movies;
-      getMoviesQry.unsubscribe();
-    });
+    await this.getMoviesCollection();
   }
 
-  onRateChange(e: Event) {
+  async onRateChange(e: Event) {
     this.filter.rate = +(e.target as HTMLInputElement).value;
-    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-      this.movies = movies;
-      getMoviesQry.unsubscribe();
-    });
+    await this.getMoviesCollection();
   }
 }

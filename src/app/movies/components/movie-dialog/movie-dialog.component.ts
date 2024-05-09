@@ -10,6 +10,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Actor, Movie } from 'src/domain';
 import { DialogComponent } from '../../../components';
 import { CreateMovieCmd, DeleteMovieCmd, EditMovieCmd, GetActorsCollectionQry } from '../../../../application';
+import { MoviesStoreService } from '../../../services';
 
 export interface DialogData {
   movie: Movie;
@@ -38,43 +39,39 @@ export class MovieDialogComponent {
     private editMovieCmd: EditMovieCmd,
     private getActorsCollectionQry: GetActorsCollectionQry,
     private deleteMovieCmd: DeleteMovieCmd,
+    private moviesStoreService: MoviesStoreService,
     private dialogRef: MatDialogRef<MovieDialogComponent>
   ) {
     this.formGroup.patchValue({ ...this.data.movie });
   }
 
-  ngOnInit() {
-    this.getActorsCollectionQry.execute('1').subscribe(actors => {
-      this.actors = actors;
-    });
+  async ngOnInit() {
+    this.actors = await this.getActorsCollectionQry.execute('1');
     this.isEdit = !!this.data.movie?.id;
   }
 
-  submit() {
+  async submit() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (!this.formGroup.valid) {
       return;
     }
     if (this.isEdit) {
-      const editCmd = this.editMovieCmd.execute(
+      const updatedMovie = await this.editMovieCmd.execute(
         this.data.movie.id,
         this.formGroup.value as Partial<Movie>
-      ).subscribe(()=>{
-        editCmd.unsubscribe();
-      });
+      );
+      this.moviesStoreService.editMovie(this.data.movie.id,updatedMovie)
     } else {
-      const createCmd = this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>).subscribe(()=>{
-        createCmd.unsubscribe();
-      });
+      const newMovie = await this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>);
+      this.moviesStoreService.addMovie(newMovie);
     }
     this.dialogRef.close();
   }
 
-  delete() {
-    const delCmd = this.deleteMovieCmd.execute(this.data.movie.id).subscribe(()=>{
-      delCmd.unsubscribe();
-      this.dialogRef.close();
-    });
+  async delete() {
+    await this.deleteMovieCmd.execute(this.data.movie.id);
+    this.moviesStoreService.deleteMovie(this.data.movie.id);
+    this.dialogRef.close();
   }
 }

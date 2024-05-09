@@ -40,7 +40,7 @@
     </tr>
     </thead>
     <tbody class="table-results__body">
-      @for (movie of movies; track movie.id) {
+      @for (movie of movies$ | async; track movie.id) {
         <tr class="table-results__row">
           <td class="table-results__cell">{{ movie.id }}</td>
           <td class="table-results__cell">{{ movie.title }}</td>
@@ -48,13 +48,14 @@
           <td class="table-results__cell">{{ movie.actors }}</td>
           <td class="table-results__cell">{{ movie.rate ? movie.rate + "/ 10" : "-" }}</td>
           <td>
-            <a class="table-results__link" (click)="preview(movie.id)">Preview</a> |
-            <a class="table-results__link" (click)="rate(movie.id)">Rate</a> |
-            <a class="table-results__link" (click)="delete(movie.id)">Delete</a>
+            @if (movie.id) {
+              <a class="table-results__link" (click)="preview(movie.id)">Preview</a> |
+              <a class="table-results__link" (click)="rate(movie.id)">Rate</a> |
+              <a class="table-results__link" (click)="delete(movie.id)">Delete</a>
+            }
           </td>
         </tr>
       }
-
     </tbody>
   </table>
 

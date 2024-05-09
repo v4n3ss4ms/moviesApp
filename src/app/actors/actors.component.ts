@@ -20,20 +20,14 @@ export class ActorsComponent {
     private dialog: MatDialog
   ) {}
 
-  ngOnInit() {
-    const getActors = this.getActorsCollectionQry.execute('1').subscribe(actors => {
-      this.actors = actors;
-      getActors.unsubscribe();
-    });
+  async ngOnInit() {
+    this.actors = await this.getActorsCollectionQry.execute('1');
   }
 
-  onSearchChange(e: Event) {
+  async onSearchChange(e: Event) {
     this.search = (e.target as HTMLInputElement).value;
-    const getActors = this.getActorsCollectionQry.execute('1', {
+    this.actors = await this.getActorsCollectionQry.execute('1', {
       name: this.search,
-    }).subscribe(actors => {
-      this.actors = actors;
-      getActors.unsubscribe();
     });
   }
 
@@ -43,12 +37,9 @@ export class ActorsComponent {
         minWidth: '300px',
       })
       .afterClosed()
-      .subscribe(() => {
-        const getActors = this.getActorsCollectionQry.execute('1', {
+      .subscribe(async () => {
+        this.actors = await this.getActorsCollectionQry.execute('1', {
           name: this.search,
-        }).subscribe(actors => {
-          this.actors = actors;
-          getActors.unsubscribe();
         });
       });
   }

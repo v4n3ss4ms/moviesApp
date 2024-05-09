@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Movie, MovieRepository } from 'src/domain';
 
 const MOVIES_API_URL = 'http://localhost:3000/movies';
@@ -12,10 +12,10 @@ export class MovieLocalRepository implements MovieRepository {
   constructor(private http: HttpClient) {
   }
 
-  getAll(
+  async getAll(
     page: string,
     filter: { title?: string; year?: number; rate?: number }
-  ): Observable<Movie[]> {
+  ): Promise<Movie[]> {
     const params = new HttpParams().set('page', page);
     let url = MOVIES_API_URL;
     Object.entries(filter)
@@ -34,22 +34,24 @@ export class MovieLocalRepository implements MovieRepository {
             break;
         }
       });
-    return this.http.get<Movie[]>(url, { params });
+    return await firstValueFrom(this.http.get<Movie[]>(url, { params }));
   }
 
-  getMovieById(id: string): Observable<Movie> {
-    return this.http.get<Movie>(`${MOVIES_API_URL}/${id}`);
+  async getMovieById(id: string): Promise<Movie> {
+    return await firstValueFrom(this.http.get<Movie>(`${MOVIES_API_URL}/${id}`));
   }
 
-  create(movie: Partial<Movie>): Observable<Movie> {
-    return this.http.post<Movie>(MOVIES_API_URL, movie);
+  async create(movie: Partial<Movie>): Promise<Movie> {
+    return await firstValueFrom(this.http.post<Movie>(MOVIES_API_URL, movie));
   }
 
-  edit(id: string, movie: Partial<Movie>): Observable<Movie> {
-    return this.http.patch<Movie>(`${MOVIES_API_URL}/${id}`, movie);
+  async edit(id: string, movie: Partial<Movie>): Promise<Movie> {
+    return await firstValueFrom(
+      this.http.patch<Movie>(`${MOVIES_API_URL}/${id}`, movie)
+    );
   }
 
-  delete(id: string): Observable<Movie> {
-    return this.http.delete<Movie>(`${MOVIES_API_URL}/${id}`);
+  async delete(id: string): Promise<Movie> {
+    return await firstValueFrom(this.http.delete<Movie>(`${MOVIES_API_URL}/${id}`));
   }
 }

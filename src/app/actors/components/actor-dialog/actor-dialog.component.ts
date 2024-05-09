@@ -34,14 +34,12 @@ export class ActorDialogComponent {
     private dialogRef: MatDialogRef<ActorDialogComponent>
   ) {}
 
-  add() {
+  async add() {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const createCmd = this.createActorCmd.execute(this.formGroup.value as Partial<Actor>).subscribe(()=>{
-        createCmd.unsubscribe();
-        this.dialogRef.close();
-      });
+      await this.createActorCmd.execute(this.formGroup.value as Partial<Actor>);
+      this.dialogRef.close();
     }
   }
 }
