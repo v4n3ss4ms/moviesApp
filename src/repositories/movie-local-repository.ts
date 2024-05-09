@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Movie, MovieRepository } from 'src/domain';
+import { Movie, MovieFilters, MovieRepository } from 'src/domain';
 
 const MOVIES_API_URL = 'http://localhost:3000/movies';
 
@@ -14,7 +14,7 @@ export class MovieLocalRepository implements MovieRepository {
 
   async getAll(
     page: string,
-    filter: { title?: string; year?: number; rate?: number }
+    filter:MovieFilters
   ): Promise<Movie[]> {
     const params = new HttpParams().set('page', page);
     let url = MOVIES_API_URL;

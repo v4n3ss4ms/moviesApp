@@ -1,9 +1,9 @@
-import { Movie } from '../dtos';
+import { Movie, MovieFilters } from '../dtos';
 
 export abstract class MovieRepository {
   abstract getAll(
     page: string,
-    filter: { title?: string; year?: number; rate?: number }
+    filter: MovieFilters
   ): Promise<Movie[]>;
 
   abstract getMovieById(id: string): Promise<Movie>;
