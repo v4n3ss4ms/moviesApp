@@ -6,8 +6,16 @@
       max="10"
       min="0"
       formControlName="rate"
+      placeholder="rate"
       [class.error]="submitted && formGroup.get('rate')?.errors"
     />
+    @if (submitted && !this.formGroup.valid) {
+      <ul class="required-error required-error-list">
+        @if (formGroup.get('rate')?.errors) {
+          <li>* Please enter a valid rate [0 - 10]</li>
+        }
+      </ul>
+    }
     <button type="submit" class="submit">Rate!</button>
   </form>
 </app-dialog>
