@@ -3,10 +3,11 @@ import { ActorDialogComponent } from './actor-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CreateActorCmd } from '../../../../application';
 import { createMock } from '@testing-library/angular/jest-utils';
+import { of } from 'rxjs';
 
 describe('ActorDialogComponent', () => {
   const createActorCmd = createMock(CreateActorCmd);
-  createActorCmd.execute = jest.fn();
+  createActorCmd.execute = jest.fn().mockReturnValue(of(null));
 
   it('should display error message when form is submitted and name is not provided', async () => {
     await render(ActorDialogComponent, {
