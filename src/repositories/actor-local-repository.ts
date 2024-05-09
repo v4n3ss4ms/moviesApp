@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Actor, ActorRepository } from '../domain';
+import { Actor, ActorFilters, ActorRepository } from '../domain';
 
 const ACTORS_API_URL = 'http://localhost:3000/actors';
 
@@ -12,7 +12,7 @@ export class ActorLocalRepository implements ActorRepository {
   constructor(private http: HttpClient) {
   }
 
-  async getAll(page: string, filter?: { name: string }): Promise<Actor[]> {
+  async getAll(page: string, filter?: ActorFilters): Promise<Actor[]> {
     const params = new HttpParams().set('page', page);
     let url = ACTORS_API_URL;
     if (filter?.name) {
