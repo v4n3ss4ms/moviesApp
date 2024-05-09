@@ -22,8 +22,9 @@ export class MoviesComponent {
   ) {}
 
   ngOnInit() {
-    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
       this.movies = movies;
+      getMoviesQry.unsubscribe();
     });
   }
 

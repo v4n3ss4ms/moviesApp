@@ -21,8 +21,9 @@ export class ActorsComponent {
   ) {}
 
   ngOnInit() {
-    this.getActorsCollectionQry.execute('1').subscribe(actors => {
+    const getActors = this.getActorsCollectionQry.execute('1').subscribe(actors => {
       this.actors = actors;
+      getActors.unsubscribe();
     });
   }
 
