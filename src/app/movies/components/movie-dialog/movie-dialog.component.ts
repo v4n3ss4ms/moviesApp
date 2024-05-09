@@ -57,18 +57,24 @@ export class MovieDialogComponent {
       return;
     }
     if (this.isEdit) {
-      this.editMovieCmd.execute(
+      const editCmd = this.editMovieCmd.execute(
         this.data.movie.id,
         this.formGroup.value as Partial<Movie>
-      );
+      ).subscribe(()=>{
+        editCmd.unsubscribe();
+      });
     } else {
-      this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>);
+      const createCmd = this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>).subscribe(()=>{
+        createCmd.unsubscribe();
+      });
     }
     this.dialogRef.close();
   }
 
   delete() {
-    this.deleteMovieCmd.execute(this.data.movie.id);
-    this.dialogRef.close();
+    const delCmd = this.deleteMovieCmd.execute(this.data.movie.id).subscribe(()=>{
+      delCmd.unsubscribe();
+      this.dialogRef.close();
+    });
   }
 }

@@ -36,8 +36,9 @@ export class MoviesComponent {
       })
       .afterClosed()
       .subscribe(() => {
-        this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+        const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
           this.movies = movies;
+          getMoviesQry.unsubscribe();
         });
       });
   }
@@ -51,16 +52,20 @@ export class MoviesComponent {
       })
       .afterClosed()
       .subscribe(() => {
-        this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+        const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
           this.movies = movies;
+          getMoviesQry.unsubscribe();
         });
       });
   }
 
   delete(id: string) {
-    this.deleteMovieCmd.execute(id);
-    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
-      this.movies = movies;
+    const delCmd = this.deleteMovieCmd.execute(id).subscribe(() => {
+      delCmd.unsubscribe();
+      const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+        this.movies = movies;
+        getMoviesQry.unsubscribe();
+      });
     });
   }
 
@@ -70,22 +75,25 @@ export class MoviesComponent {
 
   onTitleChange(e: Event) {
     this.filter.title = (e.target as HTMLInputElement).value;
-    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
       this.movies = movies;
+      getMoviesQry.unsubscribe();
     });
   }
 
   onYearChange(e: Event) {
     this.filter.year = +(e.target as HTMLInputElement).value;
-    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
       this.movies = movies;
+      getMoviesQry.unsubscribe();
     });
   }
 
   onRateChange(e: Event) {
     this.filter.rate = +(e.target as HTMLInputElement).value;
-    this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
+    const getMoviesQry = this.geMoviesCollectionQry.execute('1', this.filter).subscribe(movies => {
       this.movies = movies;
+      getMoviesQry.unsubscribe();
     });
   }
 }

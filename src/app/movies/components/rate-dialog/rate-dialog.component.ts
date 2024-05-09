@@ -44,11 +44,11 @@ export class RateDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      this.editMovieCmd.execute(
-        this.data.movie.id,
-        this.formGroup.value as Partial<Movie>
-      );
-      this.dialogRef.close();
+
+      const rateCmd = this.editMovieCmd.execute(this.data.movie.id, this.formGroup.value as Partial<Movie>).subscribe(()=>{
+        rateCmd.unsubscribe();
+        this.dialogRef.close();
+      });
     }
   }
 }

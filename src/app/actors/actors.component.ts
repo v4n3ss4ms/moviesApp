@@ -28,10 +28,11 @@ export class ActorsComponent {
 
   onSearchChange(e: Event) {
     this.search = (e.target as HTMLInputElement).value;
-    this.getActorsCollectionQry.execute('1', {
+    const getActors = this.getActorsCollectionQry.execute('1', {
       name: this.search,
     }).subscribe(actors => {
       this.actors = actors;
+      getActors.unsubscribe();
     });
   }
 
@@ -42,10 +43,11 @@ export class ActorsComponent {
       })
       .afterClosed()
       .subscribe(() => {
-        this.getActorsCollectionQry.execute('1', {
+        const getActors = this.getActorsCollectionQry.execute('1', {
           name: this.search,
         }).subscribe(actors => {
           this.actors = actors;
+          getActors.unsubscribe();
         });
       });
   }

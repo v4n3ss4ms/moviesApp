@@ -38,8 +38,10 @@ export class ActorDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      this.createActorCmd.execute(this.formGroup.value as Partial<Actor>);
-      this.dialogRef.close();
+      const createCmd = this.createActorCmd.execute(this.formGroup.value as Partial<Actor>).subscribe(()=>{
+        createCmd.unsubscribe();
+        this.dialogRef.close();
+      });
     }
   }
 }
