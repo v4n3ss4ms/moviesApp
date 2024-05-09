@@ -3,7 +3,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { createMock } from '@testing-library/angular/jest-utils';
 import { DeleteMovieCmd, GetMoviesCollectionQry } from "../../application";
 import { MoviesComponent } from "./movies.component";
-import { of } from 'rxjs';
 
 const A_MOVIES_COLLECTION_RESPONSE = [
   {
@@ -26,7 +25,7 @@ const RATE = 8;
 
 describe('MoviesComponent', () => {
   const getMoviesCollectionQry = createMock(GetMoviesCollectionQry);
-  getMoviesCollectionQry.execute = jest.fn().mockReturnValue(of(A_MOVIES_COLLECTION_RESPONSE));
+  getMoviesCollectionQry.execute = jest.fn().mockReturnValue(A_MOVIES_COLLECTION_RESPONSE);
   const deleteMovieCmd = createMock(DeleteMovieCmd);
   deleteMovieCmd.execute = jest.fn()
 

@@ -3,7 +3,6 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { createMock } from '@testing-library/angular/jest-utils';
 import { GetActorsCollectionQry } from "../../application";
 import { ActorsComponent } from "./actors.component";
-import { of } from 'rxjs';
 
 const A_ACTORS_COLLECTION_RESPONSE = [
   {
@@ -17,7 +16,7 @@ const A_ACTORS_COLLECTION_RESPONSE = [
 
 describe('ActorsComponent', () => {
   const getActorsCollectionQry = createMock(GetActorsCollectionQry);
-  getActorsCollectionQry.execute = jest.fn().mockReturnValue(of(A_ACTORS_COLLECTION_RESPONSE));
+  getActorsCollectionQry.execute = jest.fn().mockReturnValue(A_ACTORS_COLLECTION_RESPONSE);
 
   it('should show actors list', async () => {
     await render(ActorsComponent, {
