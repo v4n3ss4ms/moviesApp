@@ -1,27 +1,67 @@
 # MoviesApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.6.
+## Table of contents
+
+- [Development server](#development-server)
+  * [1 - Install dependencies](#1-install-dependencies)
+  * [2 - Run API server](#2-run-api-server)
+  * [3 - Start the application](#3-start-the-application)
+  * [4 - Navigate](#4-navigate)
+- [Build](#build)
+- [Running unit tests](#running-unit-tests)
+- [Docker](#docker)
+  * [1 - Run API server](#1-run-api-server)
+  * [2 - Build the image](#2-build-the-image)
+  * [3 - Run the image](#3-run-the-image)
+  * [4 - Navigate](#4-navigate-1)
+  
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 1 - Install dependencies
 
-## Code scaffolding
+Run `npm install`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### 2 - Run API server
+
+`npm run start-server`
+
+### 3 - Start the application
+
+Run `npm run start` for a dev server.
+
+The application will automatically reload if you change any of the source files.
+
+### 4 - Navigate
+
+`http://localhost:4200/`
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `npm run build` to build the project.
+
+The build artifacts will be stored in the `dist/` directory.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Run `npm run test` to execute the unit tests.
 
-## Running end-to-end tests
+## Docker
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### 1 - Run API server
 
-## Further help
+`npm run start-server`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Please, be sure the dependencies are installed.
+
+### 2 - Build the image
+
+`docker build -t movies-app-image .`
+
+### 3 - Run the image
+
+`docker run --name movies-app-container -d -p 8080:80 movies-app-image`
+
+### 4 - Navigate
+
+`http://localhost:8080/`
