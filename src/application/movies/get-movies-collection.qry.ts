@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MovieLocalRepository } from '../../repositories';
-import { Movie, MovieFilters } from '../../domain';
+import { MovieDto, MovieFiltersDto } from '../../domain';
 
 @Injectable({ providedIn: 'root' })
 export class GetMoviesCollectionQry {
@@ -8,8 +8,8 @@ export class GetMoviesCollectionQry {
 
   async execute(
     page: string,
-    filter: MovieFilters,
-  ): Promise<Movie[]> {
+    filter: MovieFiltersDto,
+  ): Promise<MovieDto[]> {
     return await this.movieRepository.getAll(page, filter)
   }
 }

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
-import { ActorFilters } from 'src/domain';
+import { ActorFiltersDto } from 'src/domain';
 import { ActorDialogComponent } from './components';
 import { GetActorsCollectionQry } from '../../application';
 import { ActorsStoreService } from '../services/actors-store.service';
@@ -17,7 +17,7 @@ import { AsyncPipe } from '@angular/common';
   ]
 })
 export class ActorsComponent {
-  private filter: ActorFilters = { name: '' };
+  private filter: ActorFiltersDto = { name: '' };
   actors$ = this.actorsStoreService.actors$;
 
   constructor(

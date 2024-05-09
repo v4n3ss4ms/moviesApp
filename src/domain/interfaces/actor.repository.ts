@@ -1,9 +1,9 @@
-import { Actor, ActorFilters } from '../dtos';
+import { ActorDto, ActorFiltersDto } from '../dtos';
 
 export abstract class ActorRepository {
-  abstract getAll(page: string, filter?: ActorFilters): Promise<Actor[]>;
+  abstract getAll(page: string, filter?: ActorFiltersDto): Promise<ActorDto[]>;
 
-  abstract getActorById(id: string): Promise<Actor>;
+  abstract getActorById(id: string): Promise<ActorDto>;
 
-  abstract create(actor: Partial<Actor>): Promise<Actor>;
+  abstract create(actor: Partial<ActorDto>): Promise<ActorDto>;
 }

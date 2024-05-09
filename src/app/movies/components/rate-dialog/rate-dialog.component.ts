@@ -7,13 +7,13 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Movie } from 'src/domain';
+import { MovieDto } from 'src/domain';
 import { DialogComponent } from '../../../components';
 import { EditMovieCmd } from '../../../../application';
 import { MoviesStoreService } from '../../../services';
 
 export interface RateDialogData {
-  movie: Movie;
+  movie: MovieDto;
 }
 
 @Component({
@@ -46,9 +46,9 @@ export class RateDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      const updatedMovie:Movie = await this.editMovieCmd.execute(
+      const updatedMovie:MovieDto = await this.editMovieCmd.execute(
         this.data.movie.id,
-        this.formGroup.value as Partial<Movie>
+        this.formGroup.value as Partial<MovieDto>
       );
       this.moviesStoreService.editMovie(this.data.movie.id,updatedMovie)
       this.dialogRef.close();

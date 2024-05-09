@@ -1,4 +1,4 @@
-export interface Actor {
+export interface ActorDto {
   name: string;
   id: string;
 }

@@ -5,7 +5,7 @@ import { RateDialogComponent } from './components';
 import { DeleteMovieCmd, GetMoviesCollectionQry } from '../../application';
 import { CommonModule } from '@angular/common';
 import { MoviesStoreService } from '../services';
-import { MovieFilters } from '../../domain';
+import { MovieFiltersDto } from '../../domain';
 
 @Component({
   selector: 'app-movies',
@@ -15,7 +15,7 @@ import { MovieFilters } from '../../domain';
   styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent {
-  filter: MovieFilters = {};
+  filter: MovieFiltersDto = {};
   movies$ = this.moviesStoreService.movies$;
 
   constructor(

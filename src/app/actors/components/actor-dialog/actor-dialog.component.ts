@@ -7,12 +7,12 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Actor } from 'src/domain';
+import { ActorDto } from 'src/domain';
 import { DialogComponent } from '../../../components';
 import { CreateActorCmd } from '../../../../application';
 
 export interface DialogData {
-  actor: Actor;
+  actor: ActorDto;
 }
 
 @Component({
@@ -38,7 +38,7 @@ export class ActorDialogComponent {
     this.submitted = true;
     this.formGroup.markAllAsTouched();
     if (this.formGroup.valid) {
-      await this.createActorCmd.execute(this.formGroup.value as Partial<Actor>);
+      await this.createActorCmd.execute(this.formGroup.value as Partial<ActorDto>);
       this.dialogRef.close();
     }
   }

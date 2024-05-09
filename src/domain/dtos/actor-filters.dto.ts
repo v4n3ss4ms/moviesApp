@@ -1,3 +1,3 @@
-export interface ActorFilters {
+export interface ActorFiltersDto {
   name: string;
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
-import { Movie, MovieFilters, MovieRepository } from 'src/domain';
+import { MovieDto, MovieFiltersDto, MovieRepository } from 'src/domain';
 
 const MOVIES_API_URL = 'http://localhost:3000/movies';
 
@@ -14,8 +14,8 @@ export class MovieLocalRepository implements MovieRepository {
 
   async getAll(
     page: string,
-    filter:MovieFilters
-  ): Promise<Movie[]> {
+    filter:MovieFiltersDto
+  ): Promise<MovieDto[]> {
     const params = new HttpParams().set('page', page);
     let url = MOVIES_API_URL;
     Object.entries(filter)
@@ -34,24 +34,24 @@ export class MovieLocalRepository implements MovieRepository {
             break;
         }
       });
-    return await firstValueFrom(this.http.get<Movie[]>(url, { params }));
+    return await firstValueFrom(this.http.get<MovieDto[]>(url, { params }));
   }
 
-  async getMovieById(id: string): Promise<Movie> {
-    return await firstValueFrom(this.http.get<Movie>(`${MOVIES_API_URL}/${id}`));
+  async getMovieById(id: string): Promise<MovieDto> {
+    return await firstValueFrom(this.http.get<MovieDto>(`${MOVIES_API_URL}/${id}`));
   }
 
-  async create(movie: Partial<Movie>): Promise<Movie> {
-    return await firstValueFrom(this.http.post<Movie>(MOVIES_API_URL, movie));
+  async create(movie: Partial<MovieDto>): Promise<MovieDto> {
+    return await firstValueFrom(this.http.post<MovieDto>(MOVIES_API_URL, movie));
   }
 
-  async edit(id: string, movie: Partial<Movie>): Promise<Movie> {
+  async edit(id: string, movie: Partial<MovieDto>): Promise<MovieDto> {
     return await firstValueFrom(
-      this.http.patch<Movie>(`${MOVIES_API_URL}/${id}`, movie)
+      this.http.patch<MovieDto>(`${MOVIES_API_URL}/${id}`, movie)
     );
   }
 
-  async delete(id: string): Promise<Movie> {
-    return await firstValueFrom(this.http.delete<Movie>(`${MOVIES_API_URL}/${id}`));
+  async delete(id: string): Promise<MovieDto> {
+    return await firstValueFrom(this.http.delete<MovieDto>(`${MOVIES_API_URL}/${id}`));
   }
 }

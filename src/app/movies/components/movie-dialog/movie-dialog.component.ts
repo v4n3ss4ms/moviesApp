@@ -7,13 +7,13 @@ import {
   FormsModule,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Actor, Movie } from 'src/domain';
+import { ActorDto, MovieDto } from 'src/domain';
 import { DialogComponent } from '../../../components';
 import { CreateMovieCmd, DeleteMovieCmd, EditMovieCmd, GetActorsCollectionQry } from '../../../../application';
 import { MoviesStoreService } from '../../../services';
 
 export interface DialogData {
-  movie: Movie;
+  movie: MovieDto;
 }
 
 @Component({
@@ -24,7 +24,7 @@ export interface DialogData {
   styleUrls: ['./movie-dialog.component.scss'],
 })
 export class MovieDialogComponent {
-  public actors: Actor[] = [];
+  public actors: ActorDto[] = [];
   public isEdit: boolean = false;
   public submitted: boolean = false;
   public formGroup = new FormGroup({
@@ -59,11 +59,11 @@ export class MovieDialogComponent {
     if (this.isEdit) {
       const updatedMovie = await this.editMovieCmd.execute(
         this.data.movie.id,
-        this.formGroup.value as Partial<Movie>
+        this.formGroup.value as Partial<MovieDto>
       );
       this.moviesStoreService.editMovie(this.data.movie.id,updatedMovie)
     } else {
-      const newMovie = await this.createMovieCmd.execute(this.formGroup.value as Partial<Movie>);
+      const newMovie = await this.createMovieCmd.execute(this.formGroup.value as Partial<MovieDto>);
       this.moviesStoreService.addMovie(newMovie);
     }
     this.dialogRef.close();

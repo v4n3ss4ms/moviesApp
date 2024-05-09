@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { MovieLocalRepository } from '../../repositories';
-import { Movie } from '../../domain';
+import { MovieDto } from '../../domain';
 
 @Injectable({ providedIn: 'root' })
 export class EditMovieCmd {
   constructor(private movieRepository: MovieLocalRepository) {}
 
-  async execute(id: string, movie: Partial<Movie>): Promise<Movie> {
+  async execute(id: string, movie: Partial<MovieDto>): Promise<MovieDto> {
     return await this.movieRepository.edit(id, movie)
   }
 }
